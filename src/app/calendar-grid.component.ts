@@ -5,6 +5,7 @@ import { CalendarEventComponent } from './calendar-event.component';
 import { CalendarEventPosition } from '../models/calendar.model';
 import { isSameMonth, isToday } from 'date-fns';
 import { formatDate } from '../utils/date.utils';
+import { getCalendarWeeksCount } from '../utils/calendar.utils';
 
 @Component({
   selector: 'app-calendar-grid',
@@ -20,7 +21,8 @@ import { formatDate } from '../utils/date.utils';
         }
       </div>
       
-      <div class="grid grid-cols-7 grid-rows-6 auto-rows-fr">
+      <!-- <div class="grid grid-cols-7 grid-rows-6 auto-rows-fr"> -->
+      <div [class]="gridRowsClass">
         @for (date of dates; track date) {
           <div 
             [class.bg-gray-50]="!isSameMonth(date, currentDate)"
@@ -94,6 +96,11 @@ export class CalendarGridComponent {
   formatDate = formatDate;
   isSameMonth = isSameMonth;
   isToday = isToday;
+
+  get gridRowsClass(): string {
+    const weeksCount = getCalendarWeeksCount(this.currentDate);
+    return `grid grid-cols-7 grid-rows-${weeksCount - 1}`;
+  }
 
   getPositionsForDay(date: Date): CalendarEventPosition[] {
     return this.eventPositions.filter(pos => 

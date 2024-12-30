@@ -187,7 +187,6 @@ export class AppComponent implements OnInit {
 
   openModalWithTime(event: MouseEvent, date: Date) {
     const clickedDateTime = getClickedDateTime(event, date);
-    console.log('clickedDateTime:::', clickedDateTime)
     this.selectedDate = clickedDateTime;
     this.editingSchedule = null;
     this.showModal = true;
@@ -305,18 +304,4 @@ export class AppComponent implements OnInit {
   getEventsForDay(date: Date): Schedule[] {
     return this.scheduleService.getSchedulesForDate(date);
   }
-
-  // getEventsForHour(hour: string): Schedule[] {
-  //   const [hourStr] = hour.split(':');
-  //   const startTime = new Date(this.currentDate);
-  //   startTime.setHours(parseInt(hourStr, 10), 0, 0, 0);
-  //   const endTime = new Date(startTime);
-  //   endTime.setHours(startTime.getHours() + 1);
-
-  //   return this.scheduleService.getSchedulesForDate(this.currentDate)
-  //     .filter(event => {
-  //       const start = new Date(event.startDate);
-  //       return start >= startTime && start < endTime;
-  //     });
-  // }
 }

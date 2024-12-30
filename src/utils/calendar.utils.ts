@@ -8,6 +8,8 @@ import {
   isWithinInterval,
   addDays,
   differenceInDays,
+  endOfMonth,
+  startOfMonth
 } from 'date-fns';
 
 export function getWeekDays(date: Date): Date[] {
@@ -83,3 +85,10 @@ export function getDayViewHours(): string[] {
     `${String(i).padStart(2, '0')}:00`
   );
 }
+
+export function getCalendarWeeksCount(date: Date): number {
+  const start = startOfWeek(startOfMonth(date), { weekStartsOn: 0 });
+  const end = endOfWeek(endOfMonth(date), { weekStartsOn: 0 });
+  return Math.ceil((end.getTime() - start.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
+}
+
